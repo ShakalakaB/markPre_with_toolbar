@@ -33,12 +33,12 @@ class Mdpre extends React.Component {
 }
 
 function Editor(props){
-  return  <textarea onChange={props.onChange} value={props.md} />;
+  return  <textarea className="col-sm-6" onChange={props.onChange} value={props.md} />;
 }
 
 function Preview(props){
   //return <div dangerouslySetInnerHTML={{_html:marked(props.text)}} />;
-  return <div id="preview">{props.text}</div>;
+  return <div className="col-sm-6" id="preview">{props.text}</div>;
 }
 const defaultText = 
   `# Welcome to my React Markdown Previewer!

@@ -1,11 +1,8 @@
 body{
     margin:0;
-    display: flex;
-    align-content: space-between;
 }
         
 textarea{
-    width:50vw;
     height:100vh;
     font-size:1em;
     border:2px solid red;  
@@ -14,7 +11,6 @@ textarea{
     position: absolute;
     right:0px;
     top:0px;
-    width:45vw;
     height:100vh;
     border:2px solid red;  
 }
