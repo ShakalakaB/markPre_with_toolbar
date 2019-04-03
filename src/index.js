@@ -1,7 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import './index.scss';
 
 //const title = 'My Minimal React Webpack Babel Setup';
+
 class Mdpre extends React.Component {
   constructor(props){
     super(props);
@@ -24,7 +26,7 @@ class Mdpre extends React.Component {
           {/* <Toolbar />*/}
           <Editor onChange={this.handleChange} md={this.state.input} />
         </div>
-        {/* <Preview />*/}
+          <Preview text={this.state.input} />
       </div>
     );
   }
@@ -34,6 +36,10 @@ function Editor(props){
   return  <textarea onChange={props.onChange} value={props.md} />;
 }
 
+function Preview(props){
+  //return <div dangerouslySetInnerHTML={{_html:marked(props.text)}} />;
+  return <div id="preview">{props.text}</div>;
+}
 const defaultText = 
   `# Welcome to my React Markdown Previewer!
   
