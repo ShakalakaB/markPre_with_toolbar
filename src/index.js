@@ -1,8 +1,22 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import marked from 'marked';
 import './index.scss';
 
-//const title = 'My Minimal React Webpack Babel Setup';
+marked.setOptions({
+  breaks: true,
+});
+
+console.log(marked('[link](www)'))
+
+// INSERTS target="_blank" INTO HREF TAGS (required for codepen links)
+const renderer = new marked.Renderer();
+renderer.link = function (href, title, text) {
+  return `<a target="_blank" href="${href}">${text}` + '</a>';
+}
+renderer.code = function(code, language) {
+  return '<pre><code class=language-' + language + '>' + code + '</code></pre>';
+}
 
 class Mdpre extends React.Component {
   constructor(props){
@@ -36,9 +50,18 @@ function Editor(props){
   return  <textarea className="col-sm-6" onChange={props.onChange} value={props.md} />;
 }
 
+function createMarkup(props) {
+  return {__html: props};
+}
+
 function Preview(props){
-  //return <div dangerouslySetInnerHTML={{_html:marked(props.text)}} />;
-  return <div className="col-sm-6" id="preview">{props.text}</div>;
+  const markdown=marked(props.text);
+  return(
+    /*the following sentence just won't work, though it works in 
+    https://codepen.io/no_stack_dub_sack/pen/JbPZvm?editors=0110
+    <div dangerouslySetInnerHTML={{_html:marked(props.text)}} />*/
+    <div  className="col-sm-6" id="preview" dangerouslySetInnerHTML={createMarkup(markdown)} />
+  );
 }
 const defaultText = 
   `# Welcome to my React Markdown Previewer!

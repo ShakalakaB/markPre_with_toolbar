@@ -4,7 +4,7 @@ body{
         
 textarea{
     height:100vh;
-    font-size:1em;
+    font-size:1.2em;
     border:2px solid red;  
 }
 #preview{
@@ -13,5 +13,6 @@ textarea{
     top:0px;
     height:100vh;
     border:2px solid red;  
+    overflow: auto;
 }
 
