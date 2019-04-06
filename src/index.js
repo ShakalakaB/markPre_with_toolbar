@@ -52,28 +52,28 @@ class Mdpre extends React.Component {
 function Toolbar(props){
   return(
     <div  id="toolbar">
-      <i title="Bold" id="bold" onclick={props.onClick}>
+      <i title="Bold" id="bold" onClick={props.onClick}>
         <FontAwesomeIcon icon="bold" size="lg"/>
       </i>
-      <i title="Italic" id="italic" onclick={props.onClick}>
+      <i title="Italic" id="italic" onClick={props.onClick}>
         <FontAwesomeIcon icon="italic" size="lg"/>
       </i>
-      <i title="Quote" id="quote" onclick={props.onClick}>
+      <i title="Quote" id="quote" onClick={props.onClick}>
         <FontAwesomeIcon icon="quote-left" size="lg"/>
       </i>
-      <i title="Link" id="link" onclick={props.onClick}>
+      <i title="Link" id="link" onClick={props.onClick}>
         <FontAwesomeIcon icon="link" size="lg"/>
       </i>
-      <i title="Code" id="code" onclick={props.onClick}>
+      <i title="Code" id="code" onClick={props.onClick}>
         <FontAwesomeIcon icon="code" size="lg"/>
       </i>
-      <i title="Images" id="image" onclick={props.onClick}>
+      <i title="Images" id="image" onClick={props.onClick}>
         <FontAwesomeIcon icon="images" size="lg"/>
       </i>
-      <i title="Bulleted List" id="bulletList" onclick={props.onClick}>
+      <i title="Bulleted List" id="bulletList" onClick={props.onClick}>
         <FontAwesomeIcon icon="list-ul" size="lg"/>
       </i>
-      <i title="Numbered List" id="orderedList" onclick={props.onClick}>
+      <i title="Numbered List" id="orderedList" onClick={props.onClick}>
         <FontAwesomeIcon icon="list-ol" size="lg"/>
       </i>
     </div>
