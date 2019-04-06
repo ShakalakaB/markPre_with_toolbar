@@ -1,7 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import marked from 'marked';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import './index.scss';
+import './fontawesome';
 
 marked.setOptions({
   breaks: true,
@@ -25,6 +27,7 @@ class Mdpre extends React.Component {
       input:defaultText
     }
     this.handleChange=this.handleChange.bind(this);
+    //this.handleClick=this.handleClick.bind(this);
   }
 
   handleChange(event){
@@ -36,8 +39,8 @@ class Mdpre extends React.Component {
   render(){
     return(
       <div>
-        <div id="editorWrap">
-          {/* <Toolbar />*/}
+        <div className="col-sm-6" id="editorWrap">
+          <Toolbar  />
           <Editor onChange={this.handleChange} md={this.state.input} />
         </div>
           <Preview text={this.state.input} />
@@ -46,8 +49,38 @@ class Mdpre extends React.Component {
   }
 }
 
+function Toolbar(props){
+  return(
+    <div  id="toolbar">
+      <i title="Bold" id="bold" onclick={props.onClick}>
+        <FontAwesomeIcon icon="bold" size="lg"/>
+      </i>
+      <i title="Italic" id="italic" onclick={props.onClick}>
+        <FontAwesomeIcon icon="italic" size="lg"/>
+      </i>
+      <i title="Quote" id="quote" onclick={props.onClick}>
+        <FontAwesomeIcon icon="quote-left" size="lg"/>
+      </i>
+      <i title="Link" id="link" onclick={props.onClick}>
+        <FontAwesomeIcon icon="link" size="lg"/>
+      </i>
+      <i title="Code" id="code" onclick={props.onClick}>
+        <FontAwesomeIcon icon="code" size="lg"/>
+      </i>
+      <i title="Images" id="image" onclick={props.onClick}>
+        <FontAwesomeIcon icon="images" size="lg"/>
+      </i>
+      <i title="Bulleted List" id="bulletList" onclick={props.onClick}>
+        <FontAwesomeIcon icon="list-ul" size="lg"/>
+      </i>
+      <i title="Numbered List" id="orderedList" onclick={props.onClick}>
+        <FontAwesomeIcon icon="list-ol" size="lg"/>
+      </i>
+    </div>
+  );
+}
 function Editor(props){
-  return  <textarea className="col-sm-6" onChange={props.onChange} value={props.md} />;
+  return  <textarea className="col-sm-12" onChange={props.onChange} value={props.md} />;
 }
 
 function createMarkup(props) {
@@ -63,8 +96,10 @@ function Preview(props){
     <div  className="col-sm-6" id="preview" dangerouslySetInnerHTML={createMarkup(markdown)} />
   );
 }
+
 const defaultText = 
-  `# Welcome to my React Markdown Previewer!
+  `
+  # Welcome to my React Markdown Previewer!
   
   ## This is a sub-heading...
   ### And here's some other cool stuff:

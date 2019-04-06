@@ -1,12 +1,29 @@
 body{
     margin:0;
 }
-        
-textarea{
+#editorWrap{
+    margin:0;
+    padding:0;
     height:100vh;
-    font-size:1.2em;
-    border:2px solid red;  
+    #toolbar{
+        height:40px;
+        border:2px solid red;
+        padding-left:10px;
+        display:flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: flex-start;
+        i{
+            margin-right:10px; 
+        }  
+    }      
+    textarea{
+        height:100%;
+        font-size:1.2em;
+        border:2px solid red;  
+    }
 }
+
 #preview{
     position: absolute;
     right:0px;
