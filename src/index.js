@@ -9,8 +9,6 @@ marked.setOptions({
   breaks: true,
 });
 
-console.log(marked('[link](www)'))
-
 // INSERTS target="_blank" INTO HREF TAGS (required for codepen links)
 const renderer = new marked.Renderer();
 renderer.link = function (href, title, text) {
@@ -19,7 +17,16 @@ renderer.link = function (href, title, text) {
 renderer.code = function(code, language) {
   return '<pre><code class=language-' + language + '>' + code + '</code></pre>';
 }
-
+const buttonType={
+  'bold':'**',
+  'italic':'_',
+  'quote':'> ',
+  'link':'[]()',
+  'code':'`',
+  'image':'![]()',
+  'bulletList':'- ',
+  'orderedList':'1. '
+};
 class Mdpre extends React.Component {
   constructor(props){
     super(props);
@@ -27,10 +34,40 @@ class Mdpre extends React.Component {
       input:defaultText
     }
     this.handleChange=this.handleChange.bind(this);
-    //this.handleClick=this.handleClick.bind(this);
+    this.handleClick=this.handleClick.bind(this);
   }
+  
+  handleClick(event){
+    console.log("inside handleClick");
+    let buttonName=event.currentTarget.id;
+    let inputField=document.getElementsByTagName('textarea').item(0);
+    let inputValue=inputField.value;
+    let startPos=inputField.selectionStart;
+    let endPos=inputField.selectionEnd;
+    let selectionText=inputValue.slice(startPos,endPos);
+    console.log('before enterif');
+    console.log('lastAction: '+SSM.get('lastAction')+',buttonName: '+SSM.get('lastButton'));
+    if (SSM.get('lastAction')=='click' && SSM.get('lastButton')==buttonName){
+      console.log("inside if");
+      let markedText=insertButton(buttonName,selectionText);
+      this.setState({
+        input:inputValue.slice(0,startPos)+markedText+inputValue.slice(endPos)
+      });
+      SSM.trackActionStore('click',buttonName);
+      console.log('lastAction: '+SSM.get('lastAction')+',buttonName: '+SSM.get('lastButton'));
+    }else{
+      console.log("inside else");
+      let markedText=insertButton(buttonName,selectionText);
+      this.setState({
+        input:inputValue.slice(0,startPos)+markedText+inputValue.slice(endPos)
+      });
 
+      SSM.trackActionStore('click',buttonName);
+      console.log('lastAction: '+SSM.get('lastAction')+',buttonName: '+SSM.get('lastButton'));
+    }
+  }
   handleChange(event){
+    SSM.trackActionStore('','');
     this.setState({
       input:event.target.value
     });
@@ -40,12 +77,52 @@ class Mdpre extends React.Component {
     return(
       <div>
         <div className="col-sm-6" id="editorWrap">
-          <Toolbar  />
+          <Toolbar onClick={this.handleClick} />
           <Editor onChange={this.handleChange} md={this.state.input} />
         </div>
           <Preview text={this.state.input} />
       </div>
     );
+  }
+}
+class SessionStorageManager{
+  trackActionStore(action,_buttonName){
+    this.lastAction=sessionStorage.setItem('lastAction',action);
+    this.lastButton=sessionStorage.setItem('lastButton',_buttonName);
+  }
+  get(key){
+    return sessionStorage.getItem(key);
+  }
+};
+
+const SSM=new SessionStorageManager();
+
+function insertButton(_buttonName,_selectionText){
+  let markText,preText,sufText;
+  switch(_buttonName){
+    case 'link':
+    case 'image':
+      preText=buttonType[_buttonName].match(/.?\[/)[0].toString();
+      sufText=']()';
+      markText=preText+_selectionText+sufText;
+      return markText;
+      break;
+    case 'bold':
+    case 'italic':
+    case 'code':
+      console.log('inside switch');
+      preText=buttonType[_buttonName];
+      sufText=buttonType[_buttonName];
+      markText=preText+_selectionText+sufText;
+      return markText;
+      break;
+    case 'quote':
+    case 'bulletList':
+    case 'orderedList':
+      preText=buttonType[_buttonName];
+      markText=preText+_selectionText;
+      return markText;
+      break;
   }
 }
 
